@@ -1,0 +1,24 @@
+<!-- templates/add_user.html -->
+{% extends "base.html" %} {% block content %}
+<h2>Dodaj Nowego Użytkownika</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div class="mb-3">
+    {{ form.username.label(class="form-label") }} {{
+    form.username(class="form-control") }}
+  </div>
+  <div class="mb-3">
+    {{ form.password.label(class="form-label") }} {{
+    form.password(class="form-control") }}
+  </div>
+  <div class="mb-3">
+    {{ form.full_name.label(class="form-label") }} {{
+    form.full_name(class="form-control") }}
+  </div>
+  <div class="mb-3 form-check">
+    {{ form.is_admin(class="form-check-input") }} {{
+    form.is_admin.label(class="form-check-label") }}
+  </div>
+  <div class="mb-3">{{ form.submit(class="btn btn-primary") }}</div>
+</form>
+{% endblock %}

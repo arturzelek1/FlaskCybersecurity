@@ -1,0 +1,51 @@
+<!-- templates/admin_dashboard.html -->
+{% extends "base.html" %} {% block content %}
+<h2>Panel Administratora</h2>
+<a href="{{ url_for('add_user') }}" class="btn btn-success mb-3"
+  >Dodaj Nowego Użytkownika</a
+>
+<a href="{{ url_for('set_password_expiry') }}" class="btn btn-warning mb-3"
+  >Ustaw Wygaśnięcie Hasła</a
+>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nazwa Użytkownika</th>
+      <th>Pełne Imię i Nazwisko</th>
+      <th>Rola</th>
+      <th>Status</th>
+      <th>Data Wygaśnięcia Hasła</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.full_name }}</td>
+      <td>{{ 'Administrator' if user.is_admin else 'Użytkownik' }}</td>
+      <td>{{ 'Zablokowany' if user.blocked else 'Aktywny' }}</td>
+      <td>
+        {{ user.password_expiry_date.strftime('%Y-%m-%d') if
+        user.password_expiry_date else 'Brak' }}
+      </td>
+      <td>
+        {% if not user.blocked %}
+        <a
+          href="{{ url_for('block_user', username=user.username) }}"
+          class="btn btn-danger btn-sm"
+          >Zablokuj</a
+        >
+        {% endif %} {% if user.username != 'ADMIN' %}
+        <a
+          href="{{ url_for('delete_user', username=user.username) }}"
+          class="btn btn-warning btn-sm"
+          >Usuń</a
+        >
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

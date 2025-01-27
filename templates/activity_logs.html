@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logi aktywności</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f9;
+      }
+      h2 {
+        text-align: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Logi aktywności użytkowników</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nazwa użytkownika</th>
+          <th>Data i czas akcji</th>
+          <th>Opis akcji</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td>{{ log.username }}</td>
+          <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td>{{ log.action }}</td>
+          <td class="{{ 'success' if log.status == 'Sukces' else 'error' }}">
+            {{ log.status }}
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4" style="text-align: center">Brak logów aktywności</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
